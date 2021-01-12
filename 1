@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  min-width: 250px;
+}
+
+/* Актуальные покупки */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.1s;
+  
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+/* Hover для актуальных покупок */
+ul li:hover {
+  background: #42ff9e;
+}
+
+/* Click для актуальныз покупок */
+ul li.checked {
+  background: #2bb52b;
+  color: white;
+}
+
+/* Отметить актуальную покупку как выполненную */
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: white;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+/* Удаление покупок */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+/* Hover для удаленных покупок */
+.close:hover {
+  background-color: #ff4e33;
+  color: white;
+}
+
+/* Заголовок */
+.header {
+  background-color: green;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Ввод новых покупок */
+input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 50%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+}
+
+/* Стиль кнопки "Добавить" */
+.addBtn {
+  padding: 10px;
+  width: 15%;
+  background: grey;
+  color: white;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.1s;
+  border-radius: 0;
+}
+
+/* Стиль кнопки "Удалить" */
+.addBtn {
+  padding: 10px;
+  width: 15%;
+  background: grey;
+  color: white;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.1s;
+  border-radius: 0;
+}
+/* Hover для кнопки "Удалить"*/
+.addBtn:hover {
+  background-color: #cccccc;
+  color: black;
+}
+</style>
+</head>
+<body>
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">Список покупок</h2>
+  <input type="text" id="myInput" placeholder="Добавить товар...">
+  <span onclick="newElement()" class="addBtn">Добавить</span>
+</div>
+
+<ul id="myUL">
+  <li>Хлеб</li>
+  <li>Молоко</li>
+  <li>Сыр</li>
+  <li>Огурцы</li>
+  <li>Томаты</li> 
+  <li>Сосиски</li>
+</ul>
+
+<script>
+// Удаление покупок
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+// Отметка о покупке товара
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+// Добавление товара
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("Вы должны что-то написать!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script>
+
+</body>
+</html>
